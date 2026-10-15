@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#14603E">
+<title>SV Gustlmännchen</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  * { margin: 0; padding: 0; }
+
+  :root {
+    --pitch:   #14603E;
+    --pitch-2: #1B7A4B;
+    --bg:      #F3F6F2;
+    --paper:   #FFFFFF;
+    --ink:     #161D19;
+    --muted:   #6A756E;
+    --line:    #DFE6E0;
+    --chip:    #EDF3EE;
+    --amber:   #B07206;
+    --amber-bg:#FDF4E3;
+    --red:     #B3261E;
+    --on-pitch:#FFFFFF;
+    --gold:    #CAA56D;          /* Zierfarbe aus dem Wappen */
+    --nav:     rgba(255, 255, 255, .14);
+    --nav-hov: rgba(255, 255, 255, .26);
+    --shadow:  0 1px 2px rgba(16, 32, 24, .06), 0 8px 24px -16px rgba(16, 32, 24, .35);
+
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* Dunkel: folgt dem System, laesst sich per <html data-theme="dark|light"> erzwingen.
+     Beide Bloecke halten denselben Satz Werte. */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --pitch:   #45C98A;
+      --pitch-2: #2FA76E;
+      --bg:      #0D1411;
+      --paper:   #141C18;
+      --ink:     #E7EFE9;
+      --muted:   #94A29A;
+      --line:    #243029;
+      --chip:    #1B2620;
+      --amber:   #E0A93C;
+      --amber-bg:#2A2214;
+      --red:     #E4796F;
+      --on-pitch:#06120C;
+      --gold:    #7A5A24;
+      --nav:     rgba(0, 0, 0, .18);
+      --nav-hov: rgba(0, 0, 0, .30);
+      --shadow:  0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --pitch:   #45C98A;
+    --pitch-2: #2FA76E;
+    --bg:      #0D1411;
+    --paper:   #141C18;
+    --ink:     #E7EFE9;
+    --muted:   #94A29A;
+    --line:    #243029;
+    --chip:    #1B2620;
+    --amber:   #E0A93C;
+    --amber-bg:#2A2214;
+    --red:     #E4796F;
+    --on-pitch:#06120C;
+    --gold:    #7A5A24;
+    --nav:     rgba(0, 0, 0, .18);
+    --nav-hov: rgba(0, 0, 0, .30);
+    --shadow:  0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* ---------- Kopf ---------- */
+  .top {
+    background: var(--pitch);
+    color: var(--on-pitch);
+    background-image: repeating-linear-gradient(
+      90deg, rgba(255,255,255,.05) 0 40px, transparent 40px 80px);
+    border-bottom: 3px solid var(--gold);
+  }
+  .top-inner {
+    max-width: 62rem;
+    margin: 0 auto;
+    padding: 2.25rem 1.25rem 1.5rem;
+  }
+  .brand { display: flex; align-items: center; gap: 1rem; }
+
+  .wappen { width: 5.6rem; height: auto; flex: none; }
+
+  .crest {
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    opacity: .85;
+  }
+  h1 {
+    font-size: clamp(1.9rem, 6vw, 3rem);
+    line-height: 1.05;
+    letter-spacing: -.02em;
+    margin: .35rem 0 .3rem;
+  }
+  .claim { font-size: .98rem; opacity: .85; }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+    margin-top: 1.35rem;
+  }
+  nav a {
+    color: inherit;
+    text-decoration: none;
+    font-size: .85rem;
+    font-weight: 600;
+    padding: .38rem .7rem;
+    border-radius: 999px;
+    background: var(--nav);
+  }
+  nav a:hover { background: var(--nav-hov); }
+
+  /* ---------- Layout ---------- */
+  main {
+    max-width: 62rem;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem 4rem;
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  section {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: 1.25rem;
+    scroll-margin-top: 1rem;
+  }
+
+  h2 {
+    font-size: 1.15rem;
+    letter-spacing: -.01em;
+    margin-bottom: .2rem;
+  }
+  .sub {
+    color: var(--muted);
+    font-size: .88rem;
+    margin-bottom: 1rem;
+  }
+  h3 {
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: .55rem;
+  }
+
+  /* ---------- Formulare & Knöpfe ---------- */
+  .form { display: flex; flex-wrap: wrap; gap: .5rem; align-items: flex-end; }
+  .field { display: grid; gap: .25rem; flex: 1 1 8rem; min-width: 0; }
+  .field label { font-size: .75rem; font-weight: 600; color: var(--muted); }
+
+  input, select {
+    font: inherit;
+    font-size: .95rem;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    padding: .5rem .6rem;
+    width: 100%;
+    min-width: 0;
+  }
+  input:focus-visible, select:focus-visible, button:focus-visible, .day:focus-visible {
+    outline: 2px solid var(--pitch-2);
+    outline-offset: 1px;
+  }
+
+  button {
+    font: inherit;
+    font-size: .92rem;
+    font-weight: 600;
+    color: var(--on-pitch);
+    background: var(--pitch);
+    border: 1px solid transparent;
+    border-radius: 9px;
+    padding: .55rem .95rem;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  button:hover { background: var(--pitch-2); }
+
+  button.ghost {
+    color: var(--ink);
+    background: transparent;
+    border-color: var(--line);
+  }
+  button.ghost:hover { background: var(--chip); }
+
+  button.x {
+    color: var(--muted);
+    background: transparent;
+    border: 0;
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: .25rem .4rem;
+    border-radius: 6px;
+  }
+  button.x:hover { color: var(--red); background: var(--chip); }
+
+  .note {
+    font-size: .85rem;
+    color: var(--muted);
+  }
+  .empty {
+    font-size: .9rem;
+    color: var(--muted);
+    padding: .9rem;
+    border: 1px dashed var(--line);
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  /* ---------- Anmeldung / Kader ---------- */
+  .me {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .6rem;
+    background: var(--chip);
+    border-radius: 10px;
+    padding: .7rem .85rem;
+    margin-bottom: 1rem;
+  }
+  .me strong { font-size: 1rem; }
+
+  .squad { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .player {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    font-size: .88rem;
+    background: var(--chip);
+    border-radius: 999px;
+    padding: .28rem .35rem .28rem .7rem;
+  }
+  .player .num {
+    font-size: .72rem;
+    font-weight: 700;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .player.is-me { box-shadow: inset 0 0 0 1.5px var(--pitch-2); }
+
+  /* ---------- Verein ---------- */
+  .about { max-width: 42rem; }
+  .about p + p { margin-top: .6rem; }
+
+  .facts {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .45rem 1.1rem;
+    margin-top: 1.1rem;
+    font-size: .92rem;
+  }
+  .facts dt { font-weight: 600; color: var(--muted); }
+  .facts dd { min-width: 0; }
+
+  /* ---------- Kalender ---------- */
+  .cal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    margin-bottom: .6rem;
+  }
+  .cal-month { font-weight: 700; font-size: 1rem; }
+  .cal-nav { display: flex; gap: .35rem; }
+  .cal-nav button { padding: .35rem .7rem; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: .3rem;
+  }
+  .dow {
+    text-align: center;
+    font-size: .7rem;
+    font-weight: 700;
+    color: var(--muted);
+    padding-bottom: .2rem;
+  }
+  .day {
+    font: inherit;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    height: 3.1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .15rem;
+    cursor: pointer;
+    font-size: .85rem;
+    font-variant-numeric: tabular-nums;
+    padding: 0;
+  }
+  .day:hover { background: var(--chip); }
+  .day.blank { border-color: transparent; cursor: default; pointer-events: none; }
+  .day.today { font-weight: 700; box-shadow: inset 0 0 0 1.5px var(--pitch-2); }
+  .day.past { color: var(--muted); opacity: .55; }
+  .day .dot {
+    width: 1.15rem;
+    height: 1.15rem;
+    border-radius: 999px;
+    background: var(--chip);
+    color: var(--muted);
+    font-size: .65rem;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+  .day.has .dot { background: var(--amber-bg); color: var(--amber); }
+  .day.go .dot  { background: var(--pitch); color: var(--on-pitch); }
+
+  .cal-form { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+
+  /* ---------- Termine ---------- */
+  .events { display: grid; gap: .75rem; }
+  .event {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: .85rem;
+  }
+  .event.go { border-color: var(--pitch-2); }
+  .event-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: .5rem;
+    margin-bottom: .1rem;
+  }
+  .event-date { font-weight: 700; font-size: 1rem; }
+  .event-meta { font-size: .88rem; color: var(--muted); }
+
+  .badge {
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    border-radius: 999px;
+    padding: .2rem .55rem;
+    background: var(--amber-bg);
+    color: var(--amber);
+    white-space: nowrap;
+  }
+  .badge.go { background: var(--pitch); color: var(--on-pitch); }
+
+  .bar {
+    height: 6px;
+    border-radius: 999px;
+    background: var(--chip);
+    overflow: hidden;
+    margin: .6rem 0 .5rem;
+  }
+  .bar i { display: block; height: 100%; background: var(--amber); border-radius: 999px; }
+  .event.go .bar i { background: var(--pitch-2); }
+
+  .votes { display: flex; flex-wrap: wrap; gap: .35rem; }
+  .votes button { font-size: .85rem; padding: .35rem .75rem; }
+  .vote-on[data-v="ja"]        { background: var(--pitch); border-color: transparent; color: var(--on-pitch); }
+  .vote-on[data-v="vielleicht"]{ background: var(--amber); border-color: transparent; color: var(--on-pitch); }
+  .vote-on[data-v="nein"]      { background: var(--muted); border-color: transparent; color: var(--on-pitch); }
+  .votes button.vote-on:hover { filter: brightness(1.08); }
+  .tally { font-size: .85rem; color: var(--muted); margin-top: .5rem; }
+  .tally b { color: var(--ink); font-weight: 600; }
+
+  .threshold {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .45rem;
+    font-size: .88rem;
+    color: var(--muted);
+    background: var(--chip);
+    border-radius: 10px;
+    padding: .55rem .75rem;
+    margin-bottom: 1rem;
+  }
+  .threshold input { width: 4rem; text-align: center; }
+
+  /* ---------- Strafkatalog ---------- */
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: .55rem .4rem; border-bottom: 1px solid var(--line); }
+  th {
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  td.amount, th.amount { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  td.amount b { font-weight: 600; }
+  td.amount .eur { display: block; font-size: .78rem; font-weight: 400; color: var(--muted); }
+  td.act, th.act { width: 2.2rem; text-align: right; padding-right: 0; }
+  tr:last-child td { border-bottom: 0; }
+  .pen-form { margin-top: .9rem; }
+
+  footer {
+    max-width: 62rem;
+    margin: 0 auto;
+    padding: 0 1.25rem 3rem;
+    font-size: .82rem;
+    color: var(--muted);
+  }
+  footer a { color: inherit; }
+
+  @media (max-width: 30rem) {
+    .field { flex-basis: 100%; }
+    .form button { width: 100%; }
+    .day { height: 2.7rem; font-size: .8rem; }
+    .wappen { width: 4.1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <img src="wappen.svg" alt="Wappen des SV Gustlmännchen" class="wappen">
+      <div>
+        <div class="crest">Hobbyliga · gegr. 2026</div>
+        <h1>SV Gustlmännchen</h1>
+        <p class="claim">Trainingstermine eintragen, abstimmen, kicken — und Strafen zahlen.</p>
+      </div>
+    </div>
+    <nav>
+      <a href="#anmeldung">Anmeldung</a>
+      <a href="#verein">Verein</a>
+      <a href="#kalender" class="nav-intern" hidden>Kalender</a>
+      <a href="#termine" class="nav-intern" hidden>Abstimmung</a>
+      <a href="#strafkatalog" class="nav-intern" hidden>Strafkatalog</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ Anmeldung / Kader ============ -->
+  <section id="anmeldung">
+    <h2>Anmeldung</h2>
+    <p class="sub">Trag dich einmal mit deinem Namen ein — danach kannst du Termine eintragen und abstimmen.</p>
+
+    <div id="me-box"></div>
+
+    <div id="kader-box" hidden>
+      <h3>Kader <span id="squad-count"></span></h3>
+      <div class="squad" id="squad"></div>
+    </div>
+  </section>
+
+  <!-- ============ Über den Verein ============ -->
+  <section id="verein">
+    <h2>Über den Verein</h2>
+    <p class="sub">Wer wir sind und wie das hier läuft.</p>
+
+    <div class="about">
+      <p>Wir kicken, weil es Spaß macht — Hobbyliga, kein Leistungsdruck, keine starren
+         Trainingszeiten. Wer Lust hat, meldet sich an, trägt Termine ein und stimmt mit ab.</p>
+      <p>Das Training steht nicht im Voraus fest, sondern entsteht hier: Kommen an einem Tag
+         genug Zusagen zusammen, wird gekickt. Und wer sich danebenbenimmt, zahlt in Gustl
+         in die Mannschaftskasse.</p>
+
+      <dl class="facts">
+        <dt>Gegründet</dt>   <dd>2026</dd>
+        <dt>Liga</dt>        <dd>Hobbyliga</dd>
+        <dt>Vereinsfarben</dt><dd>Grün und Weiß</dd>
+        <dt>Training</dt>    <dd>nach Abstimmung — ab genug Zusagen steht der Termin</dd>
+        <dt>Strafkasse</dt>  <dd>gerechnet in Gustl, 1 Gustl = 1,48 €</dd>
+      </dl>
+    </div>
+  </section>
+
+  <div id="intern" hidden>
+
+  <!-- ============ Kalender ============ -->
+  <section id="kalender">
+    <h2>Kalender</h2>
+    <p class="sub">Tag anklicken und Training eintragen. Punkt = Termin vorhanden, grün = findet statt.</p>
+
+    <div class="cal-head">
+      <div class="cal-month" id="cal-month"></div>
+      <div class="cal-nav">
+        <button class="ghost" id="cal-prev" type="button" aria-label="Vorheriger Monat">‹</button>
+        <button class="ghost" id="cal-today" type="button">Heute</button>
+        <button class="ghost" id="cal-next" type="button" aria-label="Nächster Monat">›</button>
+      </div>
+    </div>
+
+    <div class="grid" id="cal-dow"></div>
+    <div class="grid" id="cal-grid"></div>
+
+    <div class="cal-form">
+      <h3>Training eintragen</h3>
+      <form class="form" id="event-form">
+        <div class="field" style="flex-basis:10rem">
+          <label for="ev-date">Datum</label>
+          <input type="date" id="ev-date" required>
+        </div>
+        <div class="field" style="flex-basis:7rem">
+          <label for="ev-time">Uhrzeit</label>
+          <input type="time" id="ev-time" value="19:00" required>
+        </div>
+        <div class="field" style="flex-basis:12rem">
+          <label for="ev-place">Ort <span class="note">(optional)</span></label>
+          <input type="text" id="ev-place" maxlength="60" placeholder="z. B. Sportplatz">
+        </div>
+        <button type="submit">Eintragen</button>
+      </form>
+      <p class="note" id="event-form-note" style="margin-top:.5rem"></p>
+    </div>
+  </section>
+
+  <!-- ============ Termine & Abstimmung ============ -->
+  <section id="termine">
+    <h2>Abstimmung</h2>
+    <p class="sub">Sag zu jedem Termin Bescheid. Kommen genug zusammen, findet das Training statt.</p>
+
+    <div class="threshold">
+      <label for="threshold">Training findet statt ab</label>
+      <input type="number" id="threshold" min="2" max="30" step="1">
+      <span>Zusagen</span>
+    </div>
+
+    <div class="events" id="events"></div>
+  </section>
+
+  <!-- ============ Strafkatalog ============ -->
+  <section id="strafkatalog">
+    <h2>Strafkatalog</h2>
+    <p class="sub">Wer sich nicht dran hält, zahlt in die Mannschaftskasse. Ohne Diskussion.
+       Gerechnet wird in Gustl: <b>1 Gustl = 1,48 €</b>.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Vergehen</th>
+          <th class="amount">Betrag</th>
+          <th class="act"></th>
+        </tr>
+      </thead>
+      <tbody id="penalties"></tbody>
+    </table>
+
+    <form class="form pen-form" id="penalty-form">
+      <div class="field" style="flex-basis:14rem">
+        <label for="pen-text">Vergehen</label>
+        <input type="text" id="pen-text" maxlength="80" placeholder="z. B. Trikot vergessen" required>
+      </div>
+      <div class="field" style="flex-basis:7rem">
+        <label for="pen-amount">Betrag in Gustl</label>
+        <input type="number" id="pen-amount" min="0" max="999" step="0.5" value="2" required>
+      </div>
+      <button type="submit">Hinzufügen</button>
+    </form>
+  </section>
+
+  </div><!-- /#intern -->
+
+</main>
+
+<footer>
+  <p>SV Gustlmännchen · Hobbyliga, gegr. 2026. Alle Eintragungen werden lokal in diesem Browser
+     gespeichert — jeder sieht also erst einmal nur seine eigenen Daten.</p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var STORE = 'svg-hobbyliga-v1';
+
+  var GUSTL_EUR = 1.48;          // ein Gustl in Euro
+
+  var DEFAULT_PENALTIES = [
+    ['Zu spät zum Training (je angefangene 5 Min., höchstens 5 Gustl)', 1],
+    ['Unentschuldigt gefehlt', 5],
+    ['Zu spät zum Spiel', 10],
+    ['Handy klingelt in der Kabine', 2],
+    ['Trikot vergessen', 3],
+    ['Schienbeinschoner vergessen', 3],
+    ['Meckern gegen den Schiri (Gelbe Karte)', 5],
+    ['Rote Karte wegen Dummheit', 15],
+    ['Tunnel kassiert', 1],
+    ['Elfmeter verschossen', 5],
+    ['Eigentor', 3],
+    ['Geburtstag ohne Kuchen oder Kiste', 10],
+    ['Stollenschuhe in der Kabine', 2],
+    ['Duschen ohne Badelatschen', 1]
+  ];
+
+  var DOW = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+  var MONTHS = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+                'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+
+  /* ---------- Hilfen ---------- */
+
+  function uid() {
+    return Math.random().toString(36).slice(2, 10);
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function pad(n) { return n < 10 ? '0' + n : String(n); }
+
+  function iso(y, m, d) { return y + '-' + pad(m + 1) + '-' + pad(d); }
+
+  function todayISO() {
+    var t = new Date();
+    return iso(t.getFullYear(), t.getMonth(), t.getDate());
+  }
+
+  function parseISO(s) {
+    var p = s.split('-');
+    return new Date(+p[0], +p[1] - 1, +p[2]);
+  }
+
+  function fmtDate(s) {
+    var d = parseISO(s);
+    return DOW[(d.getDay() + 6) % 7] + ', ' + pad(d.getDate()) + '.' + pad(d.getMonth() + 1) + '.';
+  }
+
+  function num(n) {
+    return (Math.round(n * 100) / 100).toString().replace('.', ',');
+  }
+
+  function gustl(n) {
+    return num(n) + ' Gustl';
+  }
+
+  function euro(n) {
+    return (n * GUSTL_EUR).toFixed(2).replace('.', ',') + ' €';
+  }
+
+  /* ---------- Speicher ---------- */
+
+  function freshPenalties() {
+    return DEFAULT_PENALTIES.map(function (p) {
+      return { id: uid(), text: p[0], amount: p[1] };
+    });
+  }
+
+  function load() {
+    var base = { members: [], meId: null, events: [], penalties: freshPenalties(), threshold: 8 };
+    try {
+      var raw = localStorage.getItem(STORE);
+      if (!raw) return base;
+      var d = JSON.parse(raw);
+      return {
+        members:   Array.isArray(d.members)   ? d.members   : base.members,
+        meId:      d.meId || null,
+        events:    Array.isArray(d.events)    ? d.events    : base.events,
+        penalties: Array.isArray(d.penalties) ? d.penalties : base.penalties,
+        threshold: +d.threshold > 1 ? +d.threshold : base.threshold
+      };
+    } catch (e) {
+      return base;
+    }
+  }
+
+  function save() {
+    try {
+      localStorage.setItem(STORE, JSON.stringify(state));
+    } catch (e) {
+      /* privater Modus o. ä. — dann bleibt es bei dieser Sitzung */
+    }
+  }
+
+  var state = load();
+
+  /* ---------- Zugriffe ---------- */
+
+  function me() {
+    if (!state.meId) return null;
+    for (var i = 0; i < state.members.length; i++) {
+      if (state.members[i].id === state.meId) return state.members[i];
+    }
+    return null;
+  }
+
+  function memberName(id) {
+    for (var i = 0; i < state.members.length; i++) {
+      if (state.members[i].id === id) return state.members[i].name;
+    }
+    return null;
+  }
+
+  function eventsOn(date) {
+    return state.events.filter(function (ev) { return ev.date === date; });
+  }
+
+  function yesNames(ev) {
+    var out = [];
+    for (var id in ev.votes) {
+      if (ev.votes[id] === 'ja') {
+        var n = memberName(id);
+        if (n) out.push(n);
+      }
+    }
+    return out;
+  }
+
+  function countVotes(ev, kind) {
+    var n = 0;
+    for (var id in ev.votes) {
+      if (ev.votes[id] === kind && memberName(id)) n++;
+    }
+    return n;
+  }
+
+  function isOn(ev) {
+    return countVotes(ev, 'ja') >= state.threshold;
+  }
+
+  function sortedEvents() {
+    return state.events.slice().sort(function (a, b) {
+      return (a.date + a.time) < (b.date + b.time) ? -1 : 1;
+    });
+  }
+
+  /* ---------- Anmeldung / Kader ---------- */
+
+  var meBox     = document.getElementById('me-box');
+  var squadEl   = document.getElementById('squad');
+  var squadNum  = document.getElementById('squad-count');
+  var kaderBox  = document.getElementById('kader-box');
+  var internEl  = document.getElementById('intern');
+  var navIntern = document.querySelectorAll('.nav-intern');
+
+  // Kader, Termine und Strafkatalog zeigen wir erst nach der Anmeldung.
+  // Das ist ein Sichtschutz, kein Zugangsschutz — die Seite liegt beim Betrachter.
+  function setVisibility() {
+    var open = !!me();
+    internEl.hidden = !open;
+    kaderBox.hidden = !open;
+    for (var i = 0; i < navIntern.length; i++) navIntern[i].hidden = !open;
+  }
+
+  function renderMe() {
+    var m = me();
+    if (m) {
+      meBox.innerHTML =
+        '<div class="me">' +
+          '<strong>Servus, ' + esc(m.name) + '!</strong>' +
+          '<span class="note">Du bist angemeldet und kannst abstimmen.</span>' +
+          '<button class="ghost" type="button" id="logout" style="margin-left:auto">Abmelden</button>' +
+        '</div>';
+      document.getElementById('logout').addEventListener('click', function () {
+        state.meId = null;
+        save();
+        renderAll();
+      });
+    } else {
+      meBox.innerHTML =
+        '<p class="note" style="margin-bottom:.75rem">Kader, Trainingstermine, Abstimmung und ' +
+          'Strafkatalog sind nur für angemeldete Spieler sichtbar.</p>' +
+        '<form class="form" id="login-form">' +
+          '<div class="field" style="flex-basis:12rem">' +
+            '<label for="login-name">Dein Name</label>' +
+            '<input type="text" id="login-name" maxlength="30" placeholder="Vorname" required>' +
+          '</div>' +
+          '<div class="field" style="flex-basis:7rem">' +
+            '<label for="login-num">Rückennummer</label>' +
+            '<input type="number" id="login-num" min="1" max="99" placeholder="optional">' +
+          '</div>' +
+          '<button type="submit">Anmelden</button>' +
+        '</form>';
+      document.getElementById('login-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var name = document.getElementById('login-name').value.trim();
+        var num  = document.getElementById('login-num').value.trim();
+        if (!name) return;
+
+        var existing = null;
+        for (var i = 0; i < state.members.length; i++) {
+          if (state.members[i].name.toLowerCase() === name.toLowerCase()) existing = state.members[i];
+        }
+        if (existing) {
+          if (num) existing.number = num;
+          state.meId = existing.id;
+        } else {
+          var m2 = { id: uid(), name: name, number: num };
+          state.members.push(m2);
+          state.meId = m2.id;
+        }
+        save();
+        renderAll();
+      });
+    }
+  }
+
+  function renderSquad() {
+    squadNum.textContent = state.members.length ? '(' + state.members.length + ')' : '';
+    if (!state.members.length) {
+      squadEl.innerHTML = '<p class="empty" style="width:100%">Noch keiner angemeldet. Mach den Anfang.</p>';
+      return;
+    }
+    squadEl.innerHTML = state.members.map(function (m) {
+      return '<span class="player' + (m.id === state.meId ? ' is-me' : '') + '">' +
+               esc(m.name) +
+               (m.number ? '<span class="num">#' + esc(m.number) + '</span>' : '') +
+               '<button class="x" type="button" data-del-member="' + m.id + '" ' +
+                 'aria-label="' + esc(m.name) + ' aus dem Kader entfernen">×</button>' +
+             '</span>';
+    }).join('');
+  }
+
+  squadEl.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-del-member]');
+    if (!btn) return;
+    var id = btn.getAttribute('data-del-member');
+    if (!confirm(memberName(id) + ' aus dem Kader entfernen?')) return;
+    state.members = state.members.filter(function (m) { return m.id !== id; });
+    if (state.meId === id) state.meId = null;
+    save();
+    renderAll();
+  });
+
+  /* ---------- Kalender ---------- */
+
+  var calMonthEl = document.getElementById('cal-month');
+  var calGrid    = document.getElementById('cal-grid');
+  var dateInput  = document.getElementById('ev-date');
+  var formNote   = document.getElementById('event-form-note');
+
+  var view = new Date();
+  view = { y: view.getFullYear(), m: view.getMonth() };
+
+  document.getElementById('cal-dow').innerHTML =
+    DOW.map(function (d) { return '<div class="dow">' + d + '</div>'; }).join('');
+
+  function renderCalendar() {
+    calMonthEl.textContent = MONTHS[view.m] + ' ' + view.y;
+
+    var offset = (new Date(view.y, view.m, 1).getDay() + 6) % 7;
+    var days   = new Date(view.y, view.m + 1, 0).getDate();
+    var today  = todayISO();
+    var cells  = [];
+
+    for (var i = 0; i < offset; i++) cells.push('<div class="day blank"></div>');
+
+    for (var d = 1; d <= days; d++) {
+      var date = iso(view.y, view.m, d);
+      var evs  = eventsOn(date);
+      var best = 0;
+      var on   = false;
+      evs.forEach(function (ev) {
+        best = Math.max(best, countVotes(ev, 'ja'));
+        if (isOn(ev)) on = true;
+      });
+
+      var cls = 'day';
+      if (date === today) cls += ' today';
+      if (date < today) cls += ' past';
+      if (evs.length) cls += on ? ' has go' : ' has';
+
+      cells.push(
+        '<button type="button" class="' + cls + '" data-date="' + date + '" ' +
+          'aria-label="' + fmtDate(date) + (evs.length ? ', ' + evs.length + ' Termin(e)' : '') + '">' +
+          '<span>' + d + '</span>' +
+          (evs.length ? '<span class="dot">' + best + '</span>' : '') +
+        '</button>'
+      );
+    }
+
+    while (cells.length % 7 !== 0) cells.push('<div class="day blank"></div>');
+    calGrid.innerHTML = cells.join('');
+  }
+
+  calGrid.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-date]');
+    if (!btn) return;
+    var date = btn.getAttribute('data-date');
+    if (eventsOn(date).length) {
+      document.getElementById('termine').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+    if (date < todayISO()) return;          // Vergangenes lässt sich nicht mehr planen
+    dateInput.value = date;
+    document.getElementById('ev-time').focus();
+  });
+
+  document.getElementById('cal-prev').addEventListener('click', function () {
+    view.m--;
+    if (view.m < 0) { view.m = 11; view.y--; }
+    renderCalendar();
+  });
+
+  document.getElementById('cal-next').addEventListener('click', function () {
+    view.m++;
+    if (view.m > 11) { view.m = 0; view.y++; }
+    renderCalendar();
+  });
+
+  document.getElementById('cal-today').addEventListener('click', function () {
+    var t = new Date();
+    view = { y: t.getFullYear(), m: t.getMonth() };
+    renderCalendar();
+  });
+
+  document.getElementById('event-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!me()) {
+      formNote.textContent = 'Erst anmelden, dann Termine eintragen.';
+      document.getElementById('anmeldung').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+    var date  = dateInput.value;
+    var time  = document.getElementById('ev-time').value;
+    var place = document.getElementById('ev-place').value.trim();
+    if (!date || !time) return;
+
+    var ev = { id: uid(), date: date, time: time, place: place, by: state.meId, votes: {} };
+    ev.votes[state.meId] = 'ja';          // wer einträgt, ist dabei
+    state.events.push(ev);
+    save();
+
+    view = { y: parseISO(date).getFullYear(), m: parseISO(date).getMonth() };
+    formNote.textContent = fmtDate(date) + ' um ' + time + ' Uhr eingetragen — du stehst schon auf „dabei".';
+    renderAll();
+  });
+
+  /* ---------- Termine & Abstimmung ---------- */
+
+  var eventsEl    = document.getElementById('events');
+  var thresholdEl = document.getElementById('threshold');
+
+  // Nur neu zeichnen, wenn sich der Wert wirklich geaendert hat: sonst raeumt das
+  // 'change' beim Fokuswechsel die Liste ab, waehrend jemand gerade draufklickt.
+  function applyThreshold(normalize) {
+    var v = parseInt(thresholdEl.value, 10);
+    var changed = false;
+    if (v >= 2 && v <= 30 && v !== state.threshold) {
+      state.threshold = v;
+      save();
+      changed = true;
+    }
+    if (normalize && thresholdEl.value !== String(state.threshold)) {
+      thresholdEl.value = state.threshold;
+    }
+    if (changed) {
+      renderCalendar();
+      renderEvents();
+    }
+  }
+
+  thresholdEl.addEventListener('input',  function () { applyThreshold(false); });
+  thresholdEl.addEventListener('change', function () { applyThreshold(true); });
+
+  function renderEvents() {
+    if (document.activeElement !== thresholdEl) thresholdEl.value = state.threshold;
+
+    var today    = todayISO();
+    var upcoming = sortedEvents().filter(function (ev) { return ev.date >= today; });
+
+    if (!upcoming.length) {
+      eventsEl.innerHTML = '<p class="empty">Kein Termin in Sicht. Trag oben im Kalender einen ein.</p>';
+      return;
+    }
+
+    var signedIn = !!me();
+
+    eventsEl.innerHTML = upcoming.map(function (ev) {
+      var ja   = countVotes(ev, 'ja');
+      var viel = countVotes(ev, 'vielleicht');
+      var nein = countVotes(ev, 'nein');
+      var on   = ja >= state.threshold;
+      var pct  = Math.min(100, Math.round(ja / state.threshold * 100));
+      var mine = me() ? ev.votes[state.meId] : null;
+      var by   = memberName(ev.by);
+      var names = yesNames(ev);
+
+      function voteBtn(kind, label) {
+        return '<button type="button" class="ghost' + (mine === kind ? ' vote-on' : '') + '" ' +
+               'data-v="' + kind + '" data-vote="' + ev.id + '"' +
+               (signedIn ? '' : ' disabled') + '>' + label + '</button>';
+      }
+
+      return '<article class="event' + (on ? ' go' : '') + '">' +
+        '<div class="event-head">' +
+          '<span class="event-date">' + fmtDate(ev.date) + '</span>' +
+          '<span class="event-meta">' + esc(ev.time) + ' Uhr' +
+            (ev.place ? ' · ' + esc(ev.place) : '') + '</span>' +
+          '<span class="badge' + (on ? ' go' : '') + '" style="margin-left:auto">' +
+            (on ? 'Training findet statt' : 'Noch ' + (state.threshold - ja) + ' Zusage' +
+                  (state.threshold - ja === 1 ? '' : 'n')) +
+          '</span>' +
+          '<button class="x" type="button" data-del-event="' + ev.id + '" aria-label="Termin löschen">×</button>' +
+        '</div>' +
+        (by ? '<div class="event-meta">eingetragen von ' + esc(by) + '</div>' : '') +
+        '<div class="bar"><i style="width:' + pct + '%"></i></div>' +
+        '<div class="votes">' +
+          voteBtn('ja', 'Bin dabei') +
+          voteBtn('vielleicht', 'Vielleicht') +
+          voteBtn('nein', 'Kann nicht') +
+        '</div>' +
+        '<div class="tally"><b>' + ja + '</b> dabei · ' + viel + ' vielleicht · ' + nein + ' abgesagt' +
+          (names.length ? ' — ' + esc(names.join(', ')) : '') +
+          (signedIn ? '' : ' · <em>zum Abstimmen erst anmelden</em>') +
+        '</div>' +
+      '</article>';
+    }).join('');
+  }
+
+  eventsEl.addEventListener('click', function (e) {
+    var vote = e.target.closest('[data-vote]');
+    if (vote) {
+      if (!me()) return;
+      var ev = null;
+      var id = vote.getAttribute('data-vote');
+      for (var i = 0; i < state.events.length; i++) {
+        if (state.events[i].id === id) ev = state.events[i];
+      }
+      if (!ev) return;
+      var kind = vote.getAttribute('data-v');
+      if (ev.votes[state.meId] === kind) delete ev.votes[state.meId];   // nochmal klicken = zurücknehmen
+      else ev.votes[state.meId] = kind;
+      save();
+      renderAll();
+      return;
+    }
+
+    var del = e.target.closest('[data-del-event]');
+    if (del) {
+      if (!confirm('Termin wirklich löschen?')) return;
+      var delId = del.getAttribute('data-del-event');
+      state.events = state.events.filter(function (x) { return x.id !== delId; });
+      save();
+      renderAll();
+    }
+  });
+
+  /* ---------- Strafkatalog ---------- */
+
+  var penaltiesEl = document.getElementById('penalties');
+
+  function renderPenalties() {
+    if (!state.penalties.length) {
+      penaltiesEl.innerHTML =
+        '<tr><td colspan="3"><p class="empty">Keine Strafen — verdächtig.</p></td></tr>';
+      return;
+    }
+    penaltiesEl.innerHTML = state.penalties.map(function (p) {
+      return '<tr>' +
+        '<td>' + esc(p.text) + '</td>' +
+        '<td class="amount"><b>' + gustl(+p.amount) + '</b>' +
+          '<span class="eur">' + euro(+p.amount) + '</span></td>' +
+        '<td class="act"><button class="x" type="button" data-del-pen="' + p.id + '" ' +
+          'aria-label="Strafe entfernen">×</button></td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  penaltiesEl.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-del-pen]');
+    if (!btn) return;
+    var id = btn.getAttribute('data-del-pen');
+    state.penalties = state.penalties.filter(function (p) { return p.id !== id; });
+    save();
+    renderPenalties();
+  });
+
+  document.getElementById('penalty-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var text   = document.getElementById('pen-text');
+    var amount = document.getElementById('pen-amount');
+    var t = text.value.trim();
+    var a = parseFloat(amount.value);
+    if (!t || isNaN(a) || a < 0) return;
+    state.penalties.push({ id: uid(), text: t, amount: a });
+    save();
+    renderPenalties();
+    text.value = '';
+    amount.value = '2';
+    text.focus();
+  });
+
+  /* ---------- Start ---------- */
+
+  function renderAll() {
+    renderMe();
+    setVisibility();
+    renderSquad();
+    renderCalendar();
+    renderEvents();
+    renderPenalties();
+  }
+
+  dateInput.min = todayISO();
+  dateInput.value = todayISO();
+  renderAll();
+})();
+</script>
+
+</body>
+</html>
