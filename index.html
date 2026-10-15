@@ -4,233 +4,297 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#14603E">
+<meta name="theme-color" content="#2F5438">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Oswald:wght@500;600&display=swap">
 <title>SV Gustlmännchen</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; }
   * { margin: 0; padding: 0; }
 
+  /* ---------------------------------------------------------------
+     Vereinsheim: warmes Papier, Vereinsgrün und das Gold aus dem Wappen.
+     Alle Farben stehen als Token hier oben; die beiden Blöcke darunter
+     halten denselben Satz für dunkle Umgebung.
+     --------------------------------------------------------------- */
   :root {
-    --pitch:   #14603E;
-    --pitch-2: #1B7A4B;
-    --bg:      #F3F6F2;
-    --paper:   #FFFFFF;
-    --ink:     #161D19;
-    --muted:   #6A756E;
-    --line:    #DFE6E0;
-    --chip:    #EDF3EE;
-    --amber:   #B07206;
-    --amber-bg:#FDF4E3;
-    --red:     #B3261E;
-    --on-pitch:#FFFFFF;
-    --gold:    #CAA56D;          /* Zierfarbe aus dem Wappen */
-    --nav:     rgba(255, 255, 255, .14);
-    --nav-hov: rgba(255, 255, 255, .26);
-    --shadow:  0 1px 2px rgba(16, 32, 24, .06), 0 8px 24px -16px rgba(16, 32, 24, .35);
+    --ground:   #EFE7D6;        /* Papier, auf dem die Zettel liegen */
+    --paper:    #FBF6EC;        /* der Zettel selbst */
+    --sunk:     #FFFDF7;        /* Eingabefelder */
+    --ink:      #241F17;
+    --muted:    #6E6453;
+    --line:     #DDD1B8;
+    --chip:     #EDE3CE;
+    --dots:     #CBBB9B;
 
-    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --pitch:    #2F5438;        /* Vereinsgrün, Knöpfe und Marken */
+    --pitch-2:  #3A6242;        /* Grün des Wappens */
+    --on-pitch: #FBF6EC;
+
+    --band:     #2F5438;        /* Kopfband */
+    --on-band:  #FBF6EC;
+
+    --gold:     #CAA56D;        /* Zierfarbe des Wappens */
+    --gold-ink: #7A5A24;        /* Gold, das lesbar sein muss */
+
+    --amber:    #A8700F;
+    --amber-bg: #F7EBD2;
+    --red:      #9C2B20;
+
+    --shadow:   0 1px 1px rgba(60, 46, 20, .05), 0 10px 22px -18px rgba(60, 46, 20, .5);
+
+    --display: "Oswald", "Arial Narrow", Impact, sans-serif;
+    --sans:    "Barlow", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   }
 
-  /* Dunkel: folgt dem System, laesst sich per <html data-theme="dark|light"> erzwingen.
-     Beide Bloecke halten denselben Satz Werte. */
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --pitch:   #45C98A;
-      --pitch-2: #2FA76E;
-      --bg:      #0D1411;
-      --paper:   #141C18;
-      --ink:     #E7EFE9;
-      --muted:   #94A29A;
-      --line:    #243029;
-      --chip:    #1B2620;
-      --amber:   #E0A93C;
-      --amber-bg:#2A2214;
-      --red:     #E4796F;
-      --on-pitch:#06120C;
-      --gold:    #7A5A24;
-      --nav:     rgba(0, 0, 0, .18);
-      --nav-hov: rgba(0, 0, 0, .30);
-      --shadow:  0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+      --ground:   #14110C;
+      --paper:    #1D1913;
+      --sunk:     #231E16;
+      --ink:      #EFE6D4;
+      --muted:    #9C9079;
+      --line:     #2F2819;
+      --chip:     #262018;
+      --dots:     #4A4132;
+
+      --pitch:    #7CC392;
+      --pitch-2:  #96D4A8;
+      --on-pitch: #10180F;
+
+      --band:     #19291E;
+      --on-band:  #EFE6D4;
+
+      --gold:     #C9A86E;
+      --gold-ink: #DCBE8A;
+
+      --amber:    #D9A74B;
+      --amber-bg: #2A2114;
+      --red:      #E4796F;
+
+      --shadow:   0 1px 1px rgba(0, 0, 0, .5), 0 10px 22px -18px rgba(0, 0, 0, .9);
     }
   }
 
   :root[data-theme="dark"] {
-    --pitch:   #45C98A;
-    --pitch-2: #2FA76E;
-    --bg:      #0D1411;
-    --paper:   #141C18;
-    --ink:     #E7EFE9;
-    --muted:   #94A29A;
-    --line:    #243029;
-    --chip:    #1B2620;
-    --amber:   #E0A93C;
-    --amber-bg:#2A2214;
-    --red:     #E4796F;
-    --on-pitch:#06120C;
-    --gold:    #7A5A24;
-    --nav:     rgba(0, 0, 0, .18);
-    --nav-hov: rgba(0, 0, 0, .30);
-    --shadow:  0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -16px rgba(0, 0, 0, .8);
+    --ground:   #14110C;
+    --paper:    #1D1913;
+    --sunk:     #231E16;
+    --ink:      #EFE6D4;
+    --muted:    #9C9079;
+    --line:     #2F2819;
+    --chip:     #262018;
+    --dots:     #4A4132;
+
+    --pitch:    #7CC392;
+    --pitch-2:  #96D4A8;
+    --on-pitch: #10180F;
+
+    --band:     #19291E;
+    --on-band:  #EFE6D4;
+
+    --gold:     #C9A86E;
+    --gold-ink: #DCBE8A;
+
+    --amber:    #D9A74B;
+    --amber-bg: #2A2114;
+    --red:      #E4796F;
+
+    --shadow:   0 1px 1px rgba(0, 0, 0, .5), 0 10px 22px -18px rgba(0, 0, 0, .9);
   }
 
   body {
-    background: var(--bg);
+    background: var(--ground);
     color: var(--ink);
     font-family: var(--sans);
     font-size: 16px;
-    line-height: 1.5;
+    line-height: 1.55;
     -webkit-text-size-adjust: 100%;
   }
 
-  /* ---------- Kopf ---------- */
+  /* ---------- Kopf: Aushang am schwarzen Brett ---------- */
   .top {
-    background: var(--pitch);
-    color: var(--on-pitch);
+    background: var(--band);
+    color: var(--on-band);
     background-image: repeating-linear-gradient(
-      90deg, rgba(255,255,255,.05) 0 40px, transparent 40px 80px);
-    border-bottom: 3px solid var(--gold);
+      90deg, rgba(255, 255, 255, .035) 0 44px, transparent 44px 88px);
+    border-bottom: 4px double var(--gold);
   }
   .top-inner {
     max-width: 62rem;
     margin: 0 auto;
-    padding: 2.25rem 1.25rem 1.5rem;
+    padding: 2rem 1.25rem 1.4rem;
   }
-  .brand { display: flex; align-items: center; gap: 1rem; }
-
-  .wappen { width: 5.6rem; height: auto; flex: none; }
+  .brand { display: flex; align-items: center; gap: 1.1rem; }
+  .wappen { width: 6rem; height: auto; flex: none; }
 
   .crest {
-    font-size: .72rem;
-    font-weight: 700;
-    letter-spacing: .18em;
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .22em;
     text-transform: uppercase;
-    opacity: .85;
+    opacity: .8;
   }
   h1 {
-    font-size: clamp(1.9rem, 6vw, 3rem);
-    line-height: 1.05;
-    letter-spacing: -.02em;
-    margin: .35rem 0 .3rem;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(1.9rem, 6.5vw, 3.1rem);
+    line-height: 1;
+    letter-spacing: .015em;
+    text-transform: uppercase;
+    text-wrap: balance;
+    margin: .3rem 0 .35rem;
   }
-  .claim { font-size: .98rem; opacity: .85; }
+  .claim { font-size: .95rem; opacity: .82; max-width: 34rem; }
 
   nav {
     display: flex;
     flex-wrap: wrap;
     gap: .4rem;
-    margin-top: 1.35rem;
+    margin-top: 1.3rem;
   }
   nav a {
     color: inherit;
     text-decoration: none;
-    font-size: .85rem;
+    font-size: .8rem;
     font-weight: 600;
-    padding: .38rem .7rem;
-    border-radius: 999px;
-    background: var(--nav);
+    letter-spacing: .04em;
+    padding: .34rem .75rem;
+    border: 1px solid rgba(202, 165, 109, .45);
+    border-radius: 2px;
+    background: rgba(255, 255, 255, .06);
   }
-  nav a:hover { background: var(--nav-hov); }
+  nav a:hover { background: rgba(202, 165, 109, .22); border-color: var(--gold); }
 
-  /* ---------- Layout ---------- */
+  /* ---------- Zettel ---------- */
   main {
     max-width: 62rem;
     margin: 0 auto;
     padding: 1.5rem 1.25rem 4rem;
     display: grid;
-    gap: 1.25rem;
+    gap: 1.1rem;
   }
 
   section {
+    position: relative;
     background: var(--paper);
     border: 1px solid var(--line);
-    border-radius: 14px;
+    border-radius: 5px;
     box-shadow: var(--shadow);
-    padding: 1.25rem;
+    padding: 1.35rem 1.25rem;
     scroll-margin-top: 1rem;
+    overflow: hidden;
   }
 
   h2 {
-    font-size: 1.15rem;
-    letter-spacing: -.01em;
-    margin-bottom: .2rem;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.3rem;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+  h2::after {
+    content: "";
+    display: block;
+    width: 2.6rem;
+    height: 3px;
+    margin: .5rem 0 .55rem;
+    background: var(--gold);
   }
   .sub {
     color: var(--muted);
-    font-size: .88rem;
-    margin-bottom: 1rem;
+    font-size: .9rem;
+    margin-bottom: 1.1rem;
+    max-width: 42rem;
   }
   h3 {
-    font-size: .74rem;
-    font-weight: 700;
-    letter-spacing: .12em;
+    font-family: var(--display);
+    font-size: .8rem;
+    font-weight: 500;
+    letter-spacing: .16em;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: .55rem;
+    margin-bottom: .6rem;
   }
 
   /* ---------- Formulare & Knöpfe ---------- */
-  .form { display: flex; flex-wrap: wrap; gap: .5rem; align-items: flex-end; }
-  .field { display: grid; gap: .25rem; flex: 1 1 8rem; min-width: 0; }
-  .field label { font-size: .75rem; font-weight: 600; color: var(--muted); }
+  .form { display: flex; flex-wrap: wrap; gap: .55rem; align-items: flex-end; }
+  .field { display: grid; gap: .3rem; flex: 1 1 8rem; min-width: 0; }
+  .field label {
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
 
-  input, select {
+  input {
     font: inherit;
     font-size: .95rem;
     color: var(--ink);
-    background: var(--paper);
+    background: var(--sunk);
     border: 1px solid var(--line);
-    border-radius: 9px;
-    padding: .5rem .6rem;
+    border-radius: 3px;
+    padding: .52rem .6rem;
     width: 100%;
     min-width: 0;
   }
-  input:focus-visible, select:focus-visible, button:focus-visible, .day:focus-visible {
-    outline: 2px solid var(--pitch-2);
+  input:focus-visible, button:focus-visible, .day:focus-visible, nav a:focus-visible {
+    outline: 2px solid var(--gold-ink);
     outline-offset: 1px;
   }
 
   button {
-    font: inherit;
-    font-size: .92rem;
-    font-weight: 600;
+    font-family: var(--display);
+    font-size: .88rem;
+    font-weight: 500;
+    letter-spacing: .09em;
+    text-transform: uppercase;
     color: var(--on-pitch);
     background: var(--pitch);
     border: 1px solid transparent;
-    border-radius: 9px;
-    padding: .55rem .95rem;
+    border-radius: 3px;
+    padding: .58rem 1.05rem;
     cursor: pointer;
     white-space: nowrap;
   }
   button:hover { background: var(--pitch-2); }
 
   button.ghost {
+    font-family: var(--sans);
+    font-size: .88rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
     color: var(--ink);
     background: transparent;
     border-color: var(--line);
+    padding: .5rem .9rem;
   }
   button.ghost:hover { background: var(--chip); }
 
   button.x {
+    font-family: var(--sans);
     color: var(--muted);
     background: transparent;
     border: 0;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     line-height: 1;
-    padding: .25rem .4rem;
-    border-radius: 6px;
+    letter-spacing: 0;
+    padding: .2rem .35rem;
+    border-radius: 3px;
   }
   button.x:hover { color: var(--red); background: var(--chip); }
 
-  .note {
-    font-size: .85rem;
-    color: var(--muted);
-  }
+  .note { font-size: .85rem; color: var(--muted); }
   .empty {
     font-size: .9rem;
     color: var(--muted);
     padding: .9rem;
     border: 1px dashed var(--line);
-    border-radius: 10px;
+    border-radius: 3px;
     text-align: center;
   }
 
@@ -241,42 +305,68 @@
     align-items: center;
     gap: .6rem;
     background: var(--chip);
-    border-radius: 10px;
-    padding: .7rem .85rem;
-    margin-bottom: 1rem;
+    border-left: 3px solid var(--gold);
+    border-radius: 3px;
+    padding: .75rem .9rem;
+    margin-bottom: 1.1rem;
   }
-  .me strong { font-size: 1rem; }
+  .me strong { font-family: var(--display); font-weight: 500; font-size: 1.05rem; letter-spacing: .02em; }
 
   .squad { display: flex; flex-wrap: wrap; gap: .4rem; }
   .player {
     display: inline-flex;
     align-items: center;
-    gap: .35rem;
-    font-size: .88rem;
+    gap: .4rem;
+    font-size: .9rem;
     background: var(--chip);
-    border-radius: 999px;
-    padding: .28rem .35rem .28rem .7rem;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: .26rem .3rem .26rem .65rem;
   }
   .player .num {
-    font-size: .72rem;
-    font-weight: 700;
-    color: var(--muted);
+    font-family: var(--display);
+    font-size: .76rem;
+    font-weight: 500;
+    color: var(--gold-ink);
     font-variant-numeric: tabular-nums;
   }
-  .player.is-me { box-shadow: inset 0 0 0 1.5px var(--pitch-2); }
+  .player.is-me { border-color: var(--pitch); box-shadow: inset 0 0 0 1px var(--pitch); }
 
   /* ---------- Verein ---------- */
-  .about { max-width: 42rem; }
-  .about p + p { margin-top: .6rem; }
+  .about { max-width: 42rem; position: relative; z-index: 1; }
+  .about p + p { margin-top: .65rem; }
+
+  /* Wappen als blasses Wasserzeichen auf dem Vereinszettel */
+  #verein::after {
+    content: "";
+    position: absolute;
+    right: -2.5rem;
+    bottom: -3rem;
+    width: 17rem;
+    height: 17rem;
+    background: url("wappen.svg") no-repeat center / contain;
+    opacity: .06;
+    pointer-events: none;
+  }
 
   .facts {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: .45rem 1.1rem;
-    margin-top: 1.1rem;
+    gap: .5rem 1.2rem;
+    margin-top: 1.2rem;
     font-size: .92rem;
+    border-top: 1px solid var(--line);
+    padding-top: 1rem;
   }
-  .facts dt { font-weight: 600; color: var(--muted); }
+  .facts dt {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: .78rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: .12rem;
+  }
   .facts dd { min-width: 0; }
 
   /* ---------- Kalender ---------- */
@@ -285,30 +375,38 @@
     align-items: center;
     justify-content: space-between;
     gap: .5rem;
-    margin-bottom: .6rem;
+    margin-bottom: .7rem;
   }
-  .cal-month { font-weight: 700; font-size: 1rem; }
+  .cal-month {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 1.05rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
   .cal-nav { display: flex; gap: .35rem; }
-  .cal-nav button { padding: .35rem .7rem; }
+  .cal-nav button { padding: .32rem .7rem; }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: .3rem;
-  }
+  .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: .3rem; }
   .dow {
     text-align: center;
-    font-size: .7rem;
-    font-weight: 700;
+    font-family: var(--display);
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
     color: var(--muted);
-    padding-bottom: .2rem;
+    padding-bottom: .25rem;
   }
   .day {
-    font: inherit;
+    font-family: var(--sans);
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
     color: var(--ink);
-    background: transparent;
+    background: var(--sunk);
     border: 1px solid var(--line);
-    border-radius: 9px;
+    border-radius: 3px;
     height: 3.1rem;
     display: flex;
     flex-direction: column;
@@ -316,109 +414,149 @@
     justify-content: center;
     gap: .15rem;
     cursor: pointer;
-    font-size: .85rem;
+    font-size: .88rem;
     font-variant-numeric: tabular-nums;
     padding: 0;
   }
   .day:hover { background: var(--chip); }
-  .day.blank { border-color: transparent; cursor: default; pointer-events: none; }
-  .day.today { font-weight: 700; box-shadow: inset 0 0 0 1.5px var(--pitch-2); }
-  .day.past { color: var(--muted); opacity: .55; }
+  .day.blank { border-color: transparent; background: transparent; cursor: default; pointer-events: none; }
+  .day.today { font-weight: 600; border-color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); }
+  .day.past { color: var(--muted); opacity: .5; }
   .day .dot {
-    width: 1.15rem;
-    height: 1.15rem;
-    border-radius: 999px;
-    background: var(--chip);
-    color: var(--muted);
-    font-size: .65rem;
-    font-weight: 700;
+    min-width: 1.2rem;
+    height: 1.2rem;
+    padding: 0 .2rem;
+    border-radius: 2px;
+    background: var(--amber-bg);
+    color: var(--amber);
+    font-family: var(--display);
+    font-size: .68rem;
+    font-weight: 500;
     display: grid;
     place-items: center;
   }
-  .day.has .dot { background: var(--amber-bg); color: var(--amber); }
-  .day.go .dot  { background: var(--pitch); color: var(--on-pitch); }
+  .day.go .dot { background: var(--pitch); color: var(--on-pitch); }
 
-  .cal-form { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+  .cal-form { margin-top: 1.2rem; padding-top: 1.1rem; border-top: 1px solid var(--line); }
 
   /* ---------- Termine ---------- */
-  .events { display: grid; gap: .75rem; }
+  .events { display: grid; gap: .8rem; }
   .event {
     border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: .85rem;
+    border-left: 3px solid var(--line);
+    border-radius: 3px;
+    padding: .9rem;
+    background: var(--sunk);
   }
-  .event.go { border-color: var(--pitch-2); }
+  .event.go { border-left-color: var(--pitch); }
   .event-head {
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
-    gap: .5rem;
-    margin-bottom: .1rem;
+    align-items: center;
+    gap: .55rem;
+    margin-bottom: .15rem;
   }
-  .event-date { font-weight: 700; font-size: 1rem; }
+  .event-date {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 1.1rem;
+    letter-spacing: .03em;
+  }
   .event-meta { font-size: .88rem; color: var(--muted); }
 
   .badge {
+    font-family: var(--display);
     font-size: .72rem;
-    font-weight: 700;
-    letter-spacing: .04em;
-    border-radius: 999px;
-    padding: .2rem .55rem;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    padding: .22rem .6rem;
     background: var(--amber-bg);
     color: var(--amber);
     white-space: nowrap;
   }
-  .badge.go { background: var(--pitch); color: var(--on-pitch); }
+  /* Steht fest: Stempel statt Pastille */
+  .badge.go {
+    background: transparent;
+    color: var(--pitch);
+    border: 2px double var(--pitch);
+    padding: .18rem .55rem;
+    transform: rotate(-2deg);
+  }
 
   .bar {
-    height: 6px;
-    border-radius: 999px;
+    height: 5px;
+    border-radius: 2px;
     background: var(--chip);
     overflow: hidden;
-    margin: .6rem 0 .5rem;
+    margin: .65rem 0 .55rem;
   }
-  .bar i { display: block; height: 100%; background: var(--amber); border-radius: 999px; }
-  .event.go .bar i { background: var(--pitch-2); }
+  .bar i { display: block; height: 100%; background: var(--gold); }
+  .event.go .bar i { background: var(--pitch); }
 
-  .votes { display: flex; flex-wrap: wrap; gap: .35rem; }
-  .votes button { font-size: .85rem; padding: .35rem .75rem; }
-  .vote-on[data-v="ja"]        { background: var(--pitch); border-color: transparent; color: var(--on-pitch); }
-  .vote-on[data-v="vielleicht"]{ background: var(--amber); border-color: transparent; color: var(--on-pitch); }
-  .vote-on[data-v="nein"]      { background: var(--muted); border-color: transparent; color: var(--on-pitch); }
+  .votes { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .votes button { font-size: .82rem; padding: .36rem .8rem; }
+  .vote-on[data-v="ja"]         { background: var(--pitch); border-color: transparent; color: var(--on-pitch); }
+  .vote-on[data-v="vielleicht"] { background: var(--amber); border-color: transparent; color: var(--on-pitch); }
+  .vote-on[data-v="nein"]       { background: var(--muted); border-color: transparent; color: var(--on-pitch); }
   .votes button.vote-on:hover { filter: brightness(1.08); }
-  .tally { font-size: .85rem; color: var(--muted); margin-top: .5rem; }
+
+  .tally { font-size: .85rem; color: var(--muted); margin-top: .55rem; }
   .tally b { color: var(--ink); font-weight: 600; }
 
   .threshold {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: .45rem;
+    gap: .5rem;
     font-size: .88rem;
     color: var(--muted);
     background: var(--chip);
-    border-radius: 10px;
-    padding: .55rem .75rem;
-    margin-bottom: 1rem;
+    border-left: 3px solid var(--gold);
+    border-radius: 3px;
+    padding: .6rem .8rem;
+    margin-bottom: 1.1rem;
   }
-  .threshold input { width: 4rem; text-align: center; }
+  .threshold input {
+    width: 4rem;
+    text-align: center;
+    font-family: var(--display);
+    font-size: 1rem;
+  }
 
-  /* ---------- Strafkatalog ---------- */
-  table { width: 100%; border-collapse: collapse; }
-  th, td { text-align: left; padding: .55rem .4rem; border-bottom: 1px solid var(--line); }
-  th {
-    font-size: .72rem;
-    font-weight: 700;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--muted);
+  /* ---------- Strafkatalog als Preisliste ---------- */
+  .preisliste { list-style: none; display: grid; }
+  .pos {
+    display: flex;
+    align-items: flex-end;
+    gap: .2rem;
+    padding: .42rem 0;
   }
-  td.amount, th.amount { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
-  td.amount b { font-weight: 600; }
-  td.amount .eur { display: block; font-size: .78rem; font-weight: 400; color: var(--muted); }
-  td.act, th.act { width: 2.2rem; text-align: right; padding-right: 0; }
-  tr:last-child td { border-bottom: 0; }
-  .pen-form { margin-top: .9rem; }
+  .was { flex: 0 1 auto; line-height: 1.4; }
+  .fueller {
+    flex: 1 1 1.5rem;
+    min-width: 1.2rem;
+    border-bottom: 2px dotted var(--dots);
+    transform: translateY(-.35rem);
+  }
+  .preis {
+    white-space: nowrap;
+    font-family: var(--display);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+  .preis i {
+    font-family: var(--sans);
+    font-style: normal;
+    font-weight: 400;
+    font-size: .78rem;
+    color: var(--muted);
+    margin-left: .3rem;
+  }
+  .pos .x { align-self: center; margin-left: .2rem; }
+
+  .pen-form { margin-top: 1.1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
 
   footer {
     max-width: 62rem;
@@ -430,10 +568,12 @@
   footer a { color: inherit; }
 
   @media (max-width: 30rem) {
+    .brand { gap: .8rem; }
+    .wappen { width: 4.2rem; }
     .field { flex-basis: 100%; }
-    .form button { width: 100%; }
-    .day { height: 2.7rem; font-size: .8rem; }
-    .wappen { width: 4.1rem; }
+    .form > button { width: 100%; }
+    .day { height: 2.7rem; font-size: .82rem; }
+    #verein::after { width: 11rem; height: 11rem; right: -2rem; bottom: -2rem; }
   }
 </style>
 </head>
@@ -556,16 +696,7 @@
     <p class="sub">Wer sich nicht dran hält, zahlt in die Mannschaftskasse. Ohne Diskussion.
        Gerechnet wird in Gustl: <b>1 Gustl = 1,48 €</b>.</p>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Vergehen</th>
-          <th class="amount">Betrag</th>
-          <th class="act"></th>
-        </tr>
-      </thead>
-      <tbody id="penalties"></tbody>
-    </table>
+    <ul class="preisliste" id="penalties"></ul>
 
     <form class="form pen-form" id="penalty-form">
       <div class="field" style="flex-basis:14rem">
@@ -1065,18 +1196,17 @@
 
   function renderPenalties() {
     if (!state.penalties.length) {
-      penaltiesEl.innerHTML =
-        '<tr><td colspan="3"><p class="empty">Keine Strafen — verdächtig.</p></td></tr>';
+      penaltiesEl.innerHTML = '<li><p class="empty">Keine Strafen — verdächtig.</p></li>';
       return;
     }
     penaltiesEl.innerHTML = state.penalties.map(function (p) {
-      return '<tr>' +
-        '<td>' + esc(p.text) + '</td>' +
-        '<td class="amount"><b>' + gustl(+p.amount) + '</b>' +
-          '<span class="eur">' + euro(+p.amount) + '</span></td>' +
-        '<td class="act"><button class="x" type="button" data-del-pen="' + p.id + '" ' +
-          'aria-label="Strafe entfernen">×</button></td>' +
-      '</tr>';
+      return '<li class="pos">' +
+        '<span class="was">' + esc(p.text) + '</span>' +
+        '<span class="fueller" aria-hidden="true"></span>' +
+        '<span class="preis">' + gustl(+p.amount) + ' <i>' + euro(+p.amount) + '</i></span>' +
+        '<button class="x" type="button" data-del-pen="' + p.id + '" ' +
+          'aria-label="Strafe entfernen">×</button>' +
+      '</li>';
     }).join('');
   }
 

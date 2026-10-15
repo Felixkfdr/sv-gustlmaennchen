@@ -3,7 +3,8 @@
 Die Vereinsseite der Hobbyliga-Truppe: Trainingstermine eintragen, abstimmen, wer kann — und
 den Strafkatalog vor Augen haben.
 
-Zwei Dateien, kein Build, keine Abhängigkeiten: `index.html` und das Wappen `wappen.svg`.
+Zwei Dateien, kein Build: `index.html` und das Wappen `wappen.svg`. Die Schriften Oswald und Barlow
+kommen von Google Fonts; ohne Netz fällt die Seite auf Systemschriften zurück und bleibt bedienbar.
 
 ## Benutzen
 
@@ -48,8 +49,14 @@ Oben im `<script>`-Block:
 | `DEFAULT_PENALTIES` | Strafkatalog, mit dem eine frische Seite startet — Beträge in Gustl |
 | `STORE` | Schlüssel im `localStorage` |
 
-Die Vereinsfarben Grün und Weiß stecken in den CSS-Variablen `--pitch`, `--pitch-2` und `--on-pitch`
-ganz oben im `<style>`-Block; ein Dark-Mode-Satz derselben Variablen steht direkt darunter.
+Das Aussehen hängt an den Farbtokens ganz oben im `<style>`-Block — warmes Papier (`--ground`,
+`--paper`), Vereinsgrün (`--pitch`, `--band`) und das Gold des Wappens (`--gold`). Darunter stehen
+dieselben Tokens zweimal für die dunkle Darstellung: einmal nach Systemeinstellung, einmal für
+`<html data-theme="dark">`. Komponenten greifen nur auf Tokens zu, eine Farbe ändert man also an
+genau einer Stelle.
+
+Schriften: Oswald für Überschriften, Knöpfe und Beträge (`--display`), Barlow für alles andere
+(`--sans`).
 
 **Wappen:** `wappen.svg`, aus der Vorlage `FINAL_GUSTLMÄNNERS.pdf` verlustfrei als Vektor übernommen.
 Es trägt die Farben Grün `#3A6242` und Gold `#CAA56D`; das Gold steckt als `--gold` auch in der
