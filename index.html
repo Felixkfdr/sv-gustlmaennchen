@@ -27,6 +27,8 @@
     --line:     #DDD1B8;
     --chip:     #EDE3CE;
     --dots:     #CBBB9B;
+    --beer:     #E8B64C;
+    --beer-dim: #6B5120;
 
     --pitch:    #2F5438;        /* Vereinsgrün, Knöpfe und Marken */
     --pitch-2:  #3A6242;        /* Grün des Wappens */
@@ -58,6 +60,8 @@
       --line:     #2F2819;
       --chip:     #262018;
       --dots:     #4A4132;
+      --beer:     #4A3714;
+      --beer-dim: #C4A979;
 
       --pitch:    #7CC392;
       --pitch-2:  #96D4A8;
@@ -86,6 +90,8 @@
     --line:     #2F2819;
     --chip:     #262018;
     --dots:     #4A4132;
+    --beer:     #4A3714;
+    --beer-dim: #C4A979;
 
     --pitch:    #7CC392;
     --pitch-2:  #96D4A8;
@@ -184,8 +190,8 @@
     box-shadow: var(--shadow);
     padding: 1.35rem 1.25rem;
     scroll-margin-top: 1rem;
-    overflow: hidden;
   }
+  #verein { overflow: hidden; }   /* hält das Wasserzeichen im Zettel */
 
   h2 {
     font-family: var(--display);
@@ -289,6 +295,7 @@
   button.x:hover { color: var(--red); background: var(--chip); }
 
   .note { font-size: .85rem; color: var(--muted); }
+  .fehler { font-size: .85rem; font-weight: 600; color: var(--red); margin-bottom: .6rem; }
   .empty {
     font-size: .9rem;
     color: var(--muted);
@@ -567,6 +574,192 @@
   }
   footer a { color: inherit; }
 
+  /* ---------- Startseite: an der Theke ---------- */
+  .hero h2 { font-size: clamp(1.4rem, 4.5vw, 1.9rem); }
+  .hero p { max-width: 42rem; }
+  .hero p + p { margin-top: .6rem; }
+
+  .deckel-reihe {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.1rem;
+    margin: 1.4rem 0 1.3rem;
+  }
+  .deckel {
+    width: 7.6rem;
+    aspect-ratio: 1;
+    max-width: 100%;
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    gap: .15rem;
+    padding: .5rem;
+    background: var(--paper);
+    border: 2px solid var(--gold);
+    box-shadow: inset 0 0 0 3px var(--paper), inset 0 0 0 4px var(--line);
+  }
+  .deckel:nth-child(2) { transform: rotate(-4deg); }
+  .deckel:nth-child(3) { transform: rotate(3deg); }
+  .deckel b {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.45rem;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .deckel span {
+    font-size: .66rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1.25;
+  }
+
+  .cta { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .cta a {
+    font-family: var(--display);
+    font-size: .88rem;
+    font-weight: 500;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--on-pitch);
+    background: var(--pitch);
+    border: 1px solid transparent;
+    border-radius: 3px;
+    padding: .58rem 1.05rem;
+  }
+  .cta a:hover { background: var(--pitch-2); }
+  .cta a.stiller { color: var(--ink); background: transparent; border-color: var(--line); }
+  .cta a.stiller:hover { background: var(--chip); }
+
+  /* ---------- Die Mannschaft ---------- */
+  .elf {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(7.6rem, 1fr));
+    gap: .7rem;
+  }
+  .slot { position: relative; }
+  .spieler {
+    width: 100%;
+    display: grid;
+    justify-items: center;
+    gap: .3rem;
+    font-family: var(--sans);
+    font-size: .9rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ink);
+    background: var(--sunk);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: .75rem .5rem .65rem;
+  }
+  .spieler:hover { background: var(--chip); border-color: var(--gold); }
+  .bild {
+    width: 4.1rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    background: var(--pitch);
+    color: var(--on-pitch);
+    border: 2px solid var(--gold);
+    font-family: var(--display);
+    font-size: 1.15rem;
+  }
+  .bild img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .slot .nr {
+    font-family: var(--display);
+    font-size: .68rem;
+    letter-spacing: .12em;
+    color: var(--gold-ink);
+  }
+  .slot .name { font-weight: 600; line-height: 1.2; text-align: center; }
+  .slot .pos { font-size: .74rem; color: var(--muted); }
+  .slot.frei .bild {
+    background: transparent;
+    border-style: dashed;
+    border-color: var(--line);
+    color: var(--muted);
+    font-size: 1rem;
+  }
+  .slot.frei .name { font-weight: 400; color: var(--muted); }
+
+  /* Spickzettel */
+  .spick {
+    position: absolute;
+    z-index: 5;
+    top: calc(100% + .45rem);
+    left: 0;
+    width: max(100%, 13.5rem);
+    max-width: 16rem;
+    text-align: left;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--gold);
+    border-radius: 3px;
+    box-shadow: 0 14px 30px -16px rgba(40, 30, 10, .65);
+    padding: .75rem .85rem;
+    font-size: .85rem;
+  }
+  .spick[hidden] { display: none; }
+  .spick.rechts { left: auto; right: 0; }
+  .spick .kopf {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: .03em;
+    margin-bottom: .45rem;
+  }
+  .spick dl { display: grid; grid-template-columns: auto 1fr; gap: .28rem .7rem; }
+  .spick dt {
+    font-family: var(--display);
+    font-size: .68rem;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: .1rem;
+  }
+  .spick dd { min-width: 0; }
+  .spick .spruch {
+    margin-top: .6rem;
+    padding-top: .55rem;
+    border-top: 2px dotted var(--dots);
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ---------- Dritte Halbzeit ---------- */
+  #halbzeit {
+    position: relative;
+    background: var(--beer);
+    border-color: var(--beer);
+    padding-top: 2.5rem;
+  }
+  #halbzeit::before {                      /* Schaumkrone */
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 18px;
+    background-image: radial-gradient(circle at 50% 100%, var(--paper) 52%, transparent 54%);
+    background-size: 24px 18px;
+    background-repeat: repeat-x;
+  }
+  #halbzeit .sub { color: var(--beer-dim); }
+  #halbzeit h2::after { background: var(--beer-dim); }
+  .halbzeit-reihe { display: flex; flex-wrap: wrap; align-items: center; gap: 1.6rem; }
+  .halbzeit-text { flex: 1 1 18rem; max-width: 42rem; }
+  .halbzeit-text p + p { margin-top: .6rem; }
+  .strichliste { flex: 0 0 auto; color: var(--beer-dim); }
+
   @media (max-width: 30rem) {
     .brand { gap: .8rem; }
     .wappen { width: 4.2rem; }
@@ -574,6 +767,12 @@
     .form > button { width: 100%; }
     .day { height: 2.7rem; font-size: .82rem; }
     #verein::after { width: 11rem; height: 11rem; right: -2rem; bottom: -2rem; }
+    .deckel { width: 6.2rem; }
+    .deckel b { font-size: 1.2rem; }
+    .cta a { flex: 1 1 100%; text-align: center; }
+    .elf { grid-template-columns: repeat(auto-fill, minmax(6.4rem, 1fr)); gap: .5rem; }
+    .bild { width: 3.4rem; }
+    .spick { width: max(100%, 11rem); max-width: 13rem; }
   }
 </style>
 </head>
@@ -590,8 +789,11 @@
       </div>
     </div>
     <nav>
-      <a href="#anmeldung">Anmeldung</a>
+      <a href="#start">Start</a>
+      <a href="#mannschaft">Mannschaft</a>
       <a href="#verein">Verein</a>
+      <a href="#halbzeit">Dritte Halbzeit</a>
+      <a href="#anmeldung">Anmeldung</a>
       <a href="#kalender" class="nav-intern" hidden>Kalender</a>
       <a href="#termine" class="nav-intern" hidden>Abstimmung</a>
       <a href="#strafkatalog" class="nav-intern" hidden>Strafkatalog</a>
@@ -600,6 +802,33 @@
 </header>
 
 <main>
+
+  <!-- ============ Start ============ -->
+  <section id="start" class="hero">
+    <h2>Servus beim SV Gustlmännchen</h2>
+    <p>Hobbyliga, kein Leistungsdruck, keine starren Trainingszeiten. Wer Lust hat, meldet sich an,
+       trägt Termine ein und stimmt mit ab. Kommen an einem Tag genug Zusagen zusammen, wird gekickt —
+       und danach wird eingekehrt.</p>
+
+    <div class="deckel-reihe">
+      <div class="deckel"><b>2026</b><span>gegründet</span></div>
+      <div class="deckel"><b>18</b><span>Plätze im Kader</span></div>
+      <div class="deckel"><b>1,48 €</b><span>ein Gustl</span></div>
+    </div>
+
+    <div class="cta">
+      <a href="#anmeldung">Anmelden</a>
+      <a href="#mannschaft" class="stiller">Mannschaft ansehen</a>
+    </div>
+  </section>
+
+  <!-- ============ Die Mannschaft ============ -->
+  <section id="mannschaft">
+    <h2>Die Mannschaft</h2>
+    <p class="sub">Achtzehn Plätze. Tippt auf einen Spieler — oder fahrt mit der Maus drüber —,
+       dann klappt der Spickzettel auf.</p>
+    <ul class="elf" id="elf"></ul>
+  </section>
 
   <!-- ============ Anmeldung / Kader ============ -->
   <section id="anmeldung">
@@ -633,6 +862,30 @@
         <dt>Training</dt>    <dd>nach Abstimmung — ab genug Zusagen steht der Termin</dd>
         <dt>Strafkasse</dt>  <dd>gerechnet in Gustl, 1 Gustl = 1,48 €</dd>
       </dl>
+    </div>
+  </section>
+
+  <!-- ============ Dritte Halbzeit ============ -->
+  <section id="halbzeit">
+    <h2>Dritte Halbzeit</h2>
+    <p class="sub">Das Wichtigste kommt nach dem Abpfiff.</p>
+
+    <div class="halbzeit-reihe">
+      <div class="halbzeit-text">
+        <p>Nach dem Kicken wird eingekehrt. Pflicht ist das nicht, eingebürgert hat es sich trotzdem:
+           Wer mitspielt, trinkt meistens auch mit — ob Helles, Radler oder Spezi, interessiert
+           hier keinen.</p>
+        <p>Deshalb rechnen wir auch in <b>Gustl</b> statt in Euro. Ein Gustl sind 1,48 € — ungefähr
+           das, was nach einer Runde Strafen wieder auf dem Deckel landet. Wer wissen will, was ihn
+           ein Eigentor kostet: der Strafkatalog steht drin, sobald du angemeldet bist.</p>
+      </div>
+
+      <svg class="strichliste" width="128" height="72" viewBox="0 0 128 72" aria-hidden="true" fill="none"
+           stroke="currentColor" stroke-width="4" stroke-linecap="round">
+        <path d="M12 10v36M28 10v36M44 10v36M60 10v36M8 46 64 10"/>
+        <path d="M84 10v36M100 10v36M116 10v36"/>
+        <path d="M12 62h104" stroke-width="2" stroke-dasharray="3 7"/>
+      </svg>
     </div>
   </section>
 
@@ -728,6 +981,12 @@
 
   var GUSTL_EUR = 1.48;          // ein Gustl in Euro
 
+  // Prüfsumme des Vereinspassworts. Ein neues Passwort setzt man so:
+  // pruefsumme('neuesPasswort') in der Browserkonsole aufrufen und den
+  // Rückgabewert hier eintragen. Das Passwort hält Neugierige fern — ein
+  // echter Zugangsschutz ist es nicht, die Seite läuft beim Betrachter.
+  var PASSWORT = 'd2f94bf0';
+
   var DEFAULT_PENALTIES = [
     ['Zu spät zum Training (je angefangene 5 Min., höchstens 5 Gustl)', 1],
     ['Unentschuldigt gefehlt', 5],
@@ -762,6 +1021,16 @@
   }
 
   function pad(n) { return n < 10 ? '0' + n : String(n); }
+
+  function pruefsumme(text) {          // FNV-1a, reicht als Sichtschutz
+    var h = 0x811c9dc5;
+    for (var i = 0; i < text.length; i++) {
+      h ^= text.charCodeAt(i);
+      h = (h * 0x01000193) >>> 0;
+    }
+    return ('0000000' + h.toString(16)).slice(-8);
+  }
+  window.pruefsumme = pruefsumme;      // zum Setzen eines neuen Passworts
 
   function iso(y, m, d) { return y + '-' + pad(m + 1) + '-' + pad(d); }
 
@@ -878,6 +1147,142 @@
     });
   }
 
+  /* ---------- Die Mannschaft ----------
+     Achtzehn Plätze. Zum Füllen einfach den Eintrag ergänzen: name und pos
+     stehen auf dem Platz, bier/stark/seit/spruch landen im Spickzettel.
+     Ein Foto kommt als Datei nach spieler/ und wird über "bild" verlinkt —
+     fehlt die Datei, zeigt der Platz die Initialen.
+     -------------------------------------------------------------------- */
+
+  var MANNSCHAFT = [
+    { nr: 1, name: 'Gustl', pos: 'Tor', bild: 'spieler/gustl.jpg', bier: 'Helles',
+      stark: 'Abschläge und Ausreden', seit: 2026,
+      spruch: 'Beispieleintrag — so sieht ein ausgefüllter Spickzettel aus.' },
+    { nr: 2 },  { nr: 3 },  { nr: 4 },  { nr: 5 },  { nr: 6 },
+    { nr: 7 },  { nr: 8 },  { nr: 9 },  { nr: 10 }, { nr: 11 },
+    { nr: 12 }, { nr: 13 }, { nr: 14 }, { nr: 15 }, { nr: 16 },
+    { nr: 17 }, { nr: 18 }
+  ];
+
+  var elfEl = document.getElementById('elf');
+
+  function initialen(name) {
+    var teile = name.split(/\s+/);
+    var k = '';
+    for (var i = 0; i < teile.length && k.length < 2; i++) k += teile[i].charAt(0);
+    if (k.length < 2) k = name.slice(0, 2);      // Einwort-Namen: zwei Buchstaben
+    return k.toUpperCase();
+  }
+
+  function zeile(dt, dd) {
+    return '<dt>' + dt + '</dt><dd>' + esc(String(dd)) + '</dd>';
+  }
+
+  function renderMannschaft() {
+    elfEl.innerHTML = MANNSCHAFT.map(function (sp) {
+      var frei = !sp.name;
+      var id   = 'spick-' + sp.nr;
+
+      var bild = frei
+        ? '<span class="bild">' + sp.nr + '</span>'
+        : '<span class="bild">' + (sp.bild
+            ? '<img src="' + esc(sp.bild) + '" alt="" data-initialen="' + esc(initialen(sp.name)) + '">'
+            : esc(initialen(sp.name))) + '</span>';
+
+      var zettel;
+      if (frei) {
+        zettel = '<div class="kopf">Platz ' + sp.nr + ' ist frei</div>' +
+                 '<p class="note">Noch unbesetzt. Melde dich an und sag Bescheid — dann steht dein ' +
+                 'Name hier.</p>';
+      } else {
+        var dl = '';
+        if (sp.pos)   dl += zeile('Position', sp.pos);
+        dl += zeile('Nummer', sp.nr);
+        if (sp.bier)  dl += zeile('Bier', sp.bier);
+        if (sp.stark) dl += zeile('Stärke', sp.stark);
+        if (sp.seit)  dl += zeile('Dabei seit', sp.seit);
+        zettel = '<div class="kopf">' + esc(sp.name) + '</div><dl>' + dl + '</dl>' +
+                 (sp.spruch ? '<p class="spruch">' + esc(sp.spruch) + '</p>' : '');
+      }
+
+      return '<li class="slot' + (frei ? ' frei' : '') + '">' +
+          '<button class="spieler" type="button" aria-expanded="false" aria-controls="' + id + '">' +
+            bild +
+            '<span class="nr">Nr. ' + sp.nr + '</span>' +
+            '<span class="name">' + (frei ? 'frei' : esc(sp.name)) + '</span>' +
+            '<span class="pos">' + (frei ? 'noch unbesetzt' : esc(sp.pos || '')) + '</span>' +
+          '</button>' +
+          '<div class="spick" id="' + id + '" hidden>' + zettel + '</div>' +
+        '</li>';
+    }).join('');
+
+    // Fehlt das Foto, bleiben die Initialen stehen
+    Array.prototype.forEach.call(elfEl.querySelectorAll('img[data-initialen]'), function (img) {
+      img.addEventListener('error', function () {
+        img.parentNode.textContent = img.getAttribute('data-initialen');
+      });
+    });
+  }
+
+  /* ---------- Spickzettel auf- und zuklappen ---------- */
+
+  // Hovern zeigt den Zettel flüchtig, ein Klick heftet ihn fest — sonst würde
+  // der Klick auf einen schon offenen Zettel ihn sofort wieder zuklappen.
+  var offen = null;
+
+  function spickZu(auchFixierte) {
+    if (!offen) return;
+    if (offen.fixiert && !auchFixierte) return;
+    offen.panel.hidden = true;
+    offen.panel.classList.remove('rechts');
+    offen.btn.setAttribute('aria-expanded', 'false');
+    offen = null;
+  }
+
+  function spickAuf(btn, fixiert) {
+    if (offen && offen.btn === btn) {
+      if (fixiert) offen.fixiert = true;
+      return;
+    }
+    spickZu(true);
+    var panel = document.getElementById(btn.getAttribute('aria-controls'));
+    if (!panel) return;
+    panel.hidden = false;
+    btn.setAttribute('aria-expanded', 'true');
+    offen = { btn: btn, panel: panel, fixiert: !!fixiert };
+    // Am rechten Rand klappt der Zettel nach links auf, sonst steht er über dem Rand
+    if (panel.getBoundingClientRect().right > document.documentElement.clientWidth - 8) {
+      panel.classList.add('rechts');
+    }
+  }
+
+  elfEl.addEventListener('click', function (e) {
+    var btn = e.target.closest('.spieler');
+    if (!btn) return;
+    if (offen && offen.btn === btn && offen.fixiert) spickZu(true);
+    else spickAuf(btn, true);
+  });
+
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    elfEl.addEventListener('mouseover', function (e) {
+      var btn = e.target.closest('.spieler');
+      if (btn) spickAuf(btn, false);
+    });
+    elfEl.addEventListener('mouseout', function (e) {
+      var slot = e.target.closest('.slot');
+      if (!slot) return;
+      if (e.relatedTarget && slot.contains(e.relatedTarget)) return;
+      spickZu();
+    });
+  }
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.slot')) spickZu(true);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') spickZu(true);
+  });
+
   /* ---------- Anmeldung / Kader ---------- */
 
   var meBox     = document.getElementById('me-box');
@@ -913,9 +1318,11 @@
     } else {
       meBox.innerHTML =
         '<p class="note" style="margin-bottom:.75rem">Kader, Trainingstermine, Abstimmung und ' +
-          'Strafkatalog sind nur für angemeldete Spieler sichtbar.</p>' +
+          'Strafkatalog sind nur für angemeldete Spieler sichtbar. Das Vereinspasswort gibt es ' +
+          'beim Training.</p>' +
+        '<p class="fehler" id="login-fehler" hidden></p>' +
         '<form class="form" id="login-form">' +
-          '<div class="field" style="flex-basis:12rem">' +
+          '<div class="field" style="flex-basis:11rem">' +
             '<label for="login-name">Dein Name</label>' +
             '<input type="text" id="login-name" maxlength="30" placeholder="Vorname" required>' +
           '</div>' +
@@ -923,13 +1330,27 @@
             '<label for="login-num">Rückennummer</label>' +
             '<input type="number" id="login-num" min="1" max="99" placeholder="optional">' +
           '</div>' +
+          '<div class="field" style="flex-basis:10rem">' +
+            '<label for="login-pw">Vereinspasswort</label>' +
+            '<input type="password" id="login-pw" autocomplete="current-password" required>' +
+          '</div>' +
           '<button type="submit">Anmelden</button>' +
         '</form>';
       document.getElementById('login-form').addEventListener('submit', function (e) {
         e.preventDefault();
-        var name = document.getElementById('login-name').value.trim();
-        var num  = document.getElementById('login-num').value.trim();
+        var name   = document.getElementById('login-name').value.trim();
+        var num    = document.getElementById('login-num').value.trim();
+        var pw     = document.getElementById('login-pw').value;
+        var fehler = document.getElementById('login-fehler');
         if (!name) return;
+
+        if (pruefsumme(pw) !== PASSWORT) {
+          fehler.textContent = 'Das Passwort stimmt nicht. Frag im Verein nach.';
+          fehler.hidden = false;
+          document.getElementById('login-pw').value = '';
+          document.getElementById('login-pw').focus();
+          return;
+        }
 
         var existing = null;
         for (var i = 0; i < state.members.length; i++) {
@@ -1247,6 +1668,7 @@
 
   dateInput.min = todayISO();
   dateInput.value = todayISO();
+  renderMannschaft();
   renderAll();
 })();
 </script>
